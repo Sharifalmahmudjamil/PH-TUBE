@@ -18,32 +18,56 @@ const displayPost= async (categoryId) =>{
     const data= await res.json();
     // console.log(data.data);
 
+  
+
+    const cardContainer=document.getElementById('card-container');
+
+ 
+    cardContainer.innerHTML="";
+
+
+    const containerNotFound=document.getElementById('container_not_found');
+    if(data.data.length === 0){
+        cardContainer.innerHTML=`
+        <div class="flex justify-center items-center"> 
+        <div>
+           <div class="mb-6 w-44 mx-auto">
+           <img class="w-96" src="Icon.png" alt="">
+           </div>
+             <div>
+             <h3 class="text-3xl" >Oops!! Sorry, There is no content here</h3>
+             </div>
+             </div>
+      
+      </div>
+     `;
+     
+    
+    };
+  
 
     data.data.forEach((post)=>{
-        console.log(post);
-        const cardContainer=document.getElementById('card-container');
+        // console.log(post);
+      
+        
         const div= document.createElement('div');
+     
         div.innerHTML=`
-        <div class="card w-auto bg-base-100 shadow-xl">
-        <figure><img src="${post.thumbnail}" alt="Shoes" /></figure>
-        <div class="card-body">
-          <h2 class="card-title">
-            ${post.title}
-          </h2>
-          <div class="card-footer flex justify-between mt-6 gap-3">
-            <div class="w-10 rounded-full">
-              <img src="${post.authors[0]?.profile_picture}" alt="">
-            </div>
-            <p class="my-2">${post?.authors[0].profile_name}</p>
-          </div>
-          <p class="mx-12"> verified: ${post.authors[0].verified}  </p>
-         
-          <div class="card-actions justify-start mx-10">
-            <p></p>
-            
-          </div>
-          <p class="mx-10">${post.others.views} views</p>
-         
+        <div class="card bg-base-100 shadow-xl mt-10">
+        <figure><img class="w-80 h-52" src="${post.thumbnail}"/></figure>
+        <div class="card-body ">
+       <div class="flex justify-start gap-4"> 
+       <img class="rounded-full  w-14 h-14" src="${post.authors[0].profile_picture}"/>
+        <h2 class="card-title">${post.title}</h2>
+        </div>
+        <div class="mx-20  ">
+        <h2>${post.authors[0].profile_name}</h2>
+        
+        <h2 src=${post?.authors[0]?.verified?`<i class="fa-solid fa-square-check fa-xl" style="color: #0b59e0;"></i>`:""}</h2>
+        
+        
+        <h2>${post.others.views }<span> views</span></h2>
+        </div>
         </div>
       </div>
         `;
@@ -51,7 +75,29 @@ const displayPost= async (categoryId) =>{
 
     })
 
-    }
-
-
+    };
 handleCategory();
+displayPost("1001");
+
+    // // short by view handle
+    // const sortByView=document.getElementById('sort-By-View');
+    // const sortedData =() =>{
+    //     const sortedData=data.data.sort((a,b)=>{
+    //         a=a?.others?.views;
+    //         a= parseFloat(a.replace("k",""));
+
+    //         b=b?.others?.views;
+    //         b=parseFloat(b.replace("k",""));
+    //         return b - a;
+    //     })
+    //     renderCard(sortedData);
+    // }
+    // sortByView.addEventListener('click',sortedData)
+
+
+
+// blog section
+ const blogButton=document.getElementById('blog-btn');
+ blogButton.addEventListener('click',function(){
+    window.location.href="blog.html";
+ });
